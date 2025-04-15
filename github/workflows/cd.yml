@@ -1,5 +1,4 @@
-# .github/workflows/cd.yml
-name: Continuous Deployment
+name: CD - Deploy para GitHub Pages
 
 on:
   push:
@@ -8,23 +7,25 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout do código
+      - name: Checkout do repositório
         uses: actions/checkout@v3
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v3
+      - name: Configurar Python
+        uses: actions/setup-python@v4
         with:
-          node-version: 18
+          python-version: '3.11'
 
       - name: Instalar dependências
-        run: npm install
+        run: |
+          pip install -r requirements.txt
 
-      - name: Build do projeto
-        run: npm run build
+      - name: Gerar site com MkDocs (ou Sphinx, etc)
+        run: mkdocs build
 
-      - name: Deploy no GitHub Pages
+      - name: Deploy para GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
+          publish_dir: ./site

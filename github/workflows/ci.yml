@@ -1,5 +1,4 @@
-# .github/workflows/ci.yml
-name: Continuous Integration
+name: CI - Python
 
 on:
   push:
@@ -8,22 +7,24 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v3
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v3
+      - name: Configurar Python
+        uses: actions/setup-python@v4
         with:
-          node-version: 18
+          python-version: '3.11'
 
       - name: Instalar dependências
-        run: npm install
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
-      - name: Rodar testes
-        run: npm test
-
-      - name: Verificar qualidade de código com ESLint
-        run: npx eslint .
+      - name: Rodar testes com pytest
+        run: |
+          pip install pytest
+          pytest
