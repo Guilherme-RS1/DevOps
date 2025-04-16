@@ -39,6 +39,7 @@ jobs:
         run: ls -R
 
   buildx:
+    needs: deliver
     runs-on: ubuntu latest
     steps:
       -
