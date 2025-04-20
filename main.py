@@ -31,7 +31,3 @@ async def update_item(id_estudante: int):
 @app.delete("estudantes/delete/{id_estudante}")
 async def delete_estudante(id_estudante: int):
     return id_estudante > 0
-
-cd = 1
-ci = 2
-ci + cd = str
