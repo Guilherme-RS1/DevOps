@@ -39,8 +39,6 @@ jobs:
           tags: user/app:latest  # Substitua "user" pelo seu Docker Hub username
 
   discord:
-    name: Notify Discord
-    needs: [build, docker]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
