@@ -17,7 +17,7 @@ def root():
 async def funcaoteste(): 
     return {
         "teste": True,
-        "num_aleatorio": random.randint(0, 50000)
+        "num_aleatorio": random.randint(0, 20000)
     }
 
 @app.get("/estudantes/cadastro")
