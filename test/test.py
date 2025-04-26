@@ -1,12 +1,17 @@
 from src.main import *
 from unittest.mock import patch
 
+
+
 def teste_root():
-    assert root() == {"message": "HelloWorld"}
+    result = root()
+    yield result
+    assert result == {"message": "HelloWorld"}
 
 def teste_funcaoteste(): 
     with patch('random.randit', return_value=12345):
         result = funcaoteste()
+        yield result
 
     assert result() == {
         "teste": True,
@@ -15,22 +20,30 @@ def teste_funcaoteste():
 
 def test_create_estudante(estudante: Estudante):
     estudante_teste = Estudante(name="Fulano", curso="Curso 1", ativo=False)
-    assert estudante_teste == create_estudante()
-    return estudante
+    result = create_estudante(estudante_teste)
+    yield result
+    assert estudante_teste == result()
 
+def test_update_estudante_negativo():
+    result = update_estudante(-5)
+    yield result
+    assert not result
 
 def test_update_estudante():
-    assert not update_estudante(-5)
+    result = update_estudante(10)
+    yield result
+    assert result
 
-
-def test_update_estudante():
-    assert update_estudante(10)
 
 def test_delete_estudante_negativo():
-    assert not delete_estudante(-5)
+    result = delete_estudante(-5)
+    yield result
+    assert not result
     
 def test_delete_estudante_positivo():
-    assert delete_estudante(5)
+    result = delete_estudante(5)
+    yield result
+    assert result
 
 class Estudante(BaseModel): 
     name: str
